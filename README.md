@@ -12,177 +12,214 @@ A clean, modern, and fully functional Flutter application that scans for nearby 
 
 Before running this app, ensure you have:
 
-- [Flutter SDK 3.0+](https://docs.flutter.dev/get-started/install)
+- Flutter SDK 3.0+
+
 - Android Studio or Visual Studio Code
-- An Android device with **Bluetooth enabled**
+
+- An Android device with Bluetooth enabled
+
 - Nearby BLE-enabled devices (e.g., Smartwatch, Earbuds, BLE Sensor)
 
 > ⚠️ Note: BLE features require a physical device — emulators typically do not support Bluetooth.
-
----
+> 
 
 ### 2️⃣ Clone the Repository
 
-```bash
 git clone https://github.com/sejoh2/BLE-Scanner.git
 cd bleconnect
 
 
-3️⃣ Install Dependencies
+### 3️⃣ Install Dependencies
 flutter pub get
 
-4️⃣ Run the Application
+### 4️⃣ Connect a Physical Device
+
+- Connect your Android device to your computer using a USB cable.
+
+- On your phone, go to: Settings → About phone → Tap “Build number” 7 times to enable Developer Mode.
+
+- Go back to Settings → Developer options, then:
+
+- Enable USB debugging.
+
+- (Optional) Enable Wireless debugging if you prefer connecting via Wi-Fi.
+
+- Verify connection:
+ flutter devices
+
+### 5️⃣ Run the Application
 flutter run
 
-📱 App Overview
+- Your app will build and launch on the connected physical device.
+- Make sure Bluetooth is turned ON, then start scanning for nearby BLE devices.
+
+### 📱 App Overview
 
 This project implements BLE scanning and device connection using the flutter_blue_plus
  package.
 It displays all nearby BLE devices and allows users to connect, disconnect, and view their services and signal strength.
 
-🧠 State Management — Why Provider?
+### 🧠 State Management — Why Provider?
 
-This project uses Provider for state management because it provides:
+- This project uses Provider for state management because it provides:
 
-A clean separation between UI and business logic
+- A clean separation between UI and business logic
 
-Automatic UI updates when BLE scan results or connection state change
+- Automatic UI updates when BLE scan results or connection state change
 
-Lightweight and scalable architecture for handling multiple BLE devices
+- Lightweight and scalable architecture for handling multiple BLE devices
 
-Provider Usage
+#### Provider Usage
 
-BLEService — handles Bluetooth scanning, connection, and service discovery using flutter_blue_plus.
+- BLEService — handles Bluetooth scanning, connection, and service discovery using flutter_blue_plus.
 
-BLEProvider — listens to BLEService, manages device list, and exposes scan/connect states to the UI.
+- BLEProvider — listens to BLEService, manages device list, and exposes scan/connect states to the UI.
 
-LandingPage and ConnectPage use context.watch<BLEProvider>() to update the UI reactively.
-💡 Tip: Run on a real Android phone for accurate Bluetooth scanning and connections.
+- LandingPage and ConnectPage use context.watch<BLEProvider>() to update the UI reactively.
+###💡 Tip: Run on a real Android phone for accurate Bluetooth scanning and connections.
 
-🧩 Project Structure
+### 🧩 Project Structure
 lib/
-│
-├── components/
-│   ├── device_tile.dart           # Displays a BLE device with name, MAC address, and RSSI strength bars
-│   ├── filter_tile.dart           # Filter chip UI for device categories (All, Audio, Smart Watches)
-│   ├── my_button.dart             # Custom reusable button widget
-│   └── signal_strength_bar.dart   # Visualizes signal strength (RSSI) using bar indicators
-│
-├── services/
-│   ├── ble_service.dart           # Core BLE logic: scanning, connecting, disconnecting, discovering services
-│   └── ble_provider.dart          # State management using Provider; exposes device list and connection state
-│
-├── Pages/
-│   ├── landing_page.dart          # Home screen: lists nearby devices, filter options, and scan controls
-│   └── connect_page.dart          # Connects to a selected BLE device, shows services and signal info
-│
-└── main.dart                      # App entry point, initializes Provider, and defines routes
+-
+── components/
 
-🧩 Core Functionalities
+      ── device_tile.dart 
+        - Displays a BLE device with name, MAC address, and RSSI strength bars
+   
+      ── filter_tile.dart  
+        - Filter chip UI for device categories (All, Audio, Smart Watches)
+   
+      ── my_button.dart 
+        - Custom reusable button widget
+   
+      ── signal_strength_bar.dart
+       - Visualizes signal strength (RSSI) using bar indicators
 
-✅ Continuous BLE Scanning — Scans for nearby BLE devices until user presses “Stop Scan”
-✅ Device Filtering — Users can filter results by category: “All”, “Audio Devices”, “Smart Watches”
-✅ Signal Strength Display — Shows real-time RSSI strength using signal bars
-✅ Device Connection — Connect/disconnect from devices and explore services
-✅ Responsive UI — Built with clean Material Design and dynamic updates
+── services/
 
-🧰 Key Code Files Explained
-🔹 device_tile.dart
+      ── ble_service.dart       
+        - Core BLE logic: scanning, connecting, disconnecting, discovering services
+        
+      ── ble_provider.dart     
+        - State management using Provider; exposes device list and connection state
 
-Displays a single Bluetooth device (icon, name, MAC address, and signal strength).
+── Pages/
 
-Tapping navigates to ConnectPage.
+     ── landing_page.dart         
+       - Home screen: lists nearby devices, filter options, and scan controls
+   
+     ── connect_page.dart        
+       - Connects to a selected BLE device, shows services and signal info
 
-🔹 landing_page.dart
+── main.dart                    
+  - App entry point, initializes Provider, and defines routes
+    
 
-Main screen showing all scanned BLE devices.
+###🧩 Core Functionalities
 
-Includes category filters and start/stop scan button.
+- ✅ Continuous BLE Scanning — Scans for nearby BLE devices until user presses “Stop Scan”
+- ✅ Device Filtering — Users can filter results by category: “All”, “Audio Devices”, “Smart Watches”
+- ✅ Signal Strength Display — Shows real-time RSSI strength using signal bars
+- ✅ Device Connection — Connect/disconnect from devices and explore services
+= ✅ Responsive UI — Built with clean Material Design and dynamic updates
 
-Integrates with BLEProvider for live updates.
+### 🧰 Key Code Files Explained
+-🔹 device_tile.dart
 
-🔹 connect_page.dart
+- Displays a single Bluetooth device (icon, name, MAC address, and signal strength).
 
-Displays selected device details and connection status.
+- Tapping navigates to ConnectPage.
 
-Allows users to connect/disconnect and view available services.
+#### 🔹 landing_page.dart
 
-Uses a modern UI with progress indicators and error handling.
+- Main screen showing all scanned BLE devices.
 
-🔹 ble_service.dart
+- Includes category filters and start/stop scan button.
 
-Wraps all Bluetooth operations:
+- Integrates with BLEProvider for live updates.
 
-Start/stop scanning
+#### 🔹 connect_page.dart
 
-Manage connections
+- Displays selected device details and connection status.
 
-Discover services
+- Allows users to connect/disconnect and view available services.
 
-Listen to Bluetooth adapter state
+- Uses a modern UI with progress indicators and error handling.
 
-🔹 ble_provider.dart
+#### 🔹 ble_service.dart
 
-Provides reactive state management via Provider.
+- Wraps all Bluetooth operations:
 
-Tracks isScanning, isConnected, and the list of discovered devices.
+- Start/stop scanning
 
-⚙️ Challenges Faced
+- Manage connections
 
-BLE Device Names Not Displaying
+- Discover services
 
-Many BLE peripherals don’t advertise a name field.
+- Listen to Bluetooth adapter state
 
-The app gracefully falls back to showing the MAC address instead.
+#### 🔹 ble_provider.dart
 
-Managing Bluetooth Permissions
+- Provides reactive state management via Provider.
 
-Android 12+ requires explicit permissions (BLUETOOTH_SCAN, BLUETOOTH_CONNECT, ACCESS_FINE_LOCATION).
+- Tracks isScanning, isConnected, and the list of discovered devices.
 
-Tested and verified runtime permission requests.
+### ⚙️ Challenges Faced
 
-Limited Emulator Support
+- BLE Device Names Not Displaying
 
-BLE scanning cannot be tested on emulators — used nRF Connect app to verify BLE broadcasts.
+- Many BLE peripherals don’t advertise a name field.
 
-🧠 Assumptions Made
+- The app gracefully falls back to showing the MAC address instead.
 
-BLE is tested only on Android (iOS permissions differ).
+- Managing Bluetooth Permissions
 
-Scanning stops only when manually triggered.
+- Android 12+ requires explicit permissions (BLUETOOTH_SCAN, BLUETOOTH_CONNECT, ACCESS_FINE_LOCATION).
 
-Unknown devices are still displayed with their MAC address and RSSI.
+- Tested and verified runtime permission requests.
 
-Device filtering is based on name keywords (e.g., “watch”, “buds”).
+- Limited Emulator Support
 
+- BLE scanning cannot be tested on emulators — used nRF Connect app to verify BLE broadcasts.
 
-🌟 Bonus Features Implemented
+### 🧠 Assumptions Made
 
-✅ Continuous scanning
+- BLE is tested only on Android (iOS permissions differ).
 
-✅ Signal strength visualization (RSSI bars)
+- Scanning stops only when manually triggered.
 
-✅ Device category filters
+- Unknown devices are still displayed with their MAC address and RSSI.
 
-✅ Clean separation of logic and UI using Provider
-
-✅ Modern, minimal UI with responsive updates
-
-✅ Custom error handling with SnackBars
+- Device filtering is based on name keywords (e.g., “watch”, “buds”).
 
 
-🧾 How to Test the App
+### 🌟 Bonus Features Implemented
 
-Install the app on a physical Android device.
+- ✅ Continuous scanning
 
-Turn on Bluetooth and allow location permissions.
+- ✅ Signal strength visualization (RSSI bars)
 
-Press “Start Scan” — nearby BLE devices will appear.
+- ✅ Device category filters
 
-Tap any device to open the Connect Page.
+- ✅ Clean separation of logic and UI using Provider
 
-Press “Connect” to establish a BLE connection.
+- ✅ Modern, minimal UI with responsive updates
 
-View its services and signal strength.
+- ✅ Custom error handling with SnackBars
 
-Press “Disconnect” to close the session.
+
+### 🧾 How to Test the App
+
+- Install the app on a physical Android device.
+
+- Turn on Bluetooth and allow location permissions.
+
+- Press “Start Scan” — nearby BLE devices will appear.
+
+- Tap any device to open the Connect Page.
+
+- Press “Connect” to establish a BLE connection.
+
+- View its services and signal strength.
+
+- Press “Disconnect” to close the session.
