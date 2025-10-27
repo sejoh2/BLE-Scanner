@@ -1,4 +1,4 @@
-# bleconnect
+# BLE - Connect
 
 # 🛰️ Flutter BLE Smart Device Scanner
 
